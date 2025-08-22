@@ -52,7 +52,7 @@ function PayButton() {
           razorpay_order_id: string;
           razorpay_signature: string;
         }) {
-        const res = await api.post('http://localhost:3000/api/orders/verify',{
+        const res = await api.post('/api/orders/verify',{
             orderid: orderid,
             order_id: response.razorpay_order_id,
             payment_id: response.razorpay_payment_id,
