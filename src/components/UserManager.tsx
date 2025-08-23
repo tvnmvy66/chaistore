@@ -39,24 +39,23 @@ function UserManager() {
     }
     try {
       const response = await api.post(`/api/auth/google`,{ credential: credentialResponse.credential });
-      console.log(response.data)
       if (response){
         const data = await response.data
         localStorage.setItem("token", data.token);
         localStorage.setItem("userInfo", JSON.stringify(data.payload));
         setUser(data.payload);
         setShowLogin(false);
-        // window.location.reload();
-        // toast.success(`Hey ${data?.payload.name || null }, Welcome !`, {
-        //   style: {
-        //     backgroundColor: "rgba(255, 255, 255, 0.1)",
-        //     backdropFilter: "blur(16px)",            
-        //     WebkitBackdropFilter: "blur(16px)",   
-        //     border:"0" ,     
-        //     color:"black"
-        //   },
-        //   position:'top-center'
-        // });
+        window.location.reload();
+        toast.success(`Hey ${data?.payload.name || null }, Welcome !`, {
+          style: {
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            backdropFilter: "blur(16px)",            
+            WebkitBackdropFilter: "blur(16px)",   
+            border:"0" ,     
+            color:"black"
+          },
+          position:'top-center'
+        });
       } else {
         alert("login failed please try after some time")
       }
