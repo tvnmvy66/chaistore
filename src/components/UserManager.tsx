@@ -46,7 +46,7 @@ function UserManager() {
         body: JSON.stringify({ credential: credentialResponse.credential }),
         credentials: "include",
       });
-
+      console.log(response)
       if (response.ok){
         const data = await response.json();
         localStorage.setItem("token", data.token);

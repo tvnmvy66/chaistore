@@ -51,6 +51,6 @@ export const authGoogle = async (req, res) => {
     res.status(200).json({ payload, token });
     }}
     catch (error) {
-        res.status(401).json({ error: 'Invalid Google credential' });
+        res.status(401).json({ message: `Invalid Google credential : ${error}` });
     }
 }

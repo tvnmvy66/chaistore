@@ -26,7 +26,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Handle unauthorized (maybe redirect to login)
-      console.error("Unauthorized! Redirecting...");
+      console.log("Unauthorized! ",error);
     }
     return Promise.reject(error);
   }
