@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import {type CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { toast } from "sonner"
 import { Link } from "react-router-dom"
-
+import api from "../lib/api.ts"
 interface User {
   email: string,
   name: string,
@@ -38,32 +38,25 @@ function UserManager() {
       return;
     }
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/google`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ credential: credentialResponse.credential }),
-        credentials: "include",
-      });
-      console.log(response)
-      if (response.ok){
-        const data = await response.json();
+      const response = await api.post(`/api/auth/google`,{ credential: credentialResponse.credential });
+      console.log(response.data)
+      if (response){
+        const data = await response.data
         localStorage.setItem("token", data.token);
         localStorage.setItem("userInfo", JSON.stringify(data.payload));
         setUser(data.payload);
         setShowLogin(false);
-        window.location.reload();
-        toast.success(`Hey ${data?.payload.name || null }, Welcome !`, {
-          style: {
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
-            backdropFilter: "blur(16px)",            
-            WebkitBackdropFilter: "blur(16px)",   
-            border:"0" ,     
-            color:"black"
-          },
-          position:'top-center'
-        });
+        // window.location.reload();
+        // toast.success(`Hey ${data?.payload.name || null }, Welcome !`, {
+        //   style: {
+        //     backgroundColor: "rgba(255, 255, 255, 0.1)",
+        //     backdropFilter: "blur(16px)",            
+        //     WebkitBackdropFilter: "blur(16px)",   
+        //     border:"0" ,     
+        //     color:"black"
+        //   },
+        //   position:'top-center'
+        // });
       } else {
         alert("login failed please try after some time")
       }
